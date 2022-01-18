@@ -3,7 +3,7 @@ from tkinter import *
 def addClayWindow(mainWindow):
 	ROOT = Tk()
 	ROOT.title("Add a new clay type")
-	ROOT.geometry("225x245")
+	ROOT.geometry("225x250")
 	ROOT.resizable(False, False)
 
 	FRAME = Frame(ROOT, padx=5, pady=2)
