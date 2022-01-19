@@ -1,4 +1,7 @@
 from tkinter import *
+from tkinter.messagebox import showerror
+from re import search
+import backend
 
 def addClayWindow(mainWindow):
 	ROOT = Tk()
@@ -35,6 +38,19 @@ def addClayWindow(mainWindow):
 
 	SEPARATOR = Label(FRAME, text=" ")
 	SEPARATOR.grid(column=0, row=6)
+    
+    def addClay():
+        CLAY_NAME = NAME_ENTRY.get()
+        try:
+            SHRINK_RATE = int(SHRINK_ENTRY.get())
+            ABSORB_RATE = int(ABSORPTION_ENTRY.get())
+        except ValueError:
+            showerror(message="You seem to have entered an incorrect input. Please try again.")
+        
+        if not search("[a-zA-Z]", CLAY_NAME):
+            showerror("You left the name blank. Please try again.")
+
+
 
 	ADD_BUTTON = Button(FRAME, text="Add!", width=16)
 	ADD_BUTTON.grid(row=7, column=0, sticky=E)
