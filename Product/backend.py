@@ -57,8 +57,52 @@ def getClays(TABLE_NAME):
         CLAY_LIST.append(CLAY_TUPLES[i][0])
     return CLAY_LIST
 
-def calcShrink():
-    pass
+def calcShrink(SHRINK_RATE, ABSORB_RATE, DIMENSION):
+    PERCENTAGE = 1 - (SHRINK_RATE / 100)
+    NEW_DIMENSION = DIMENSION * PERCENTAGE
+    return NEW_DIMENSION
+
+def addToTable(TABLE_NAME, CLAY_NAME, SHRINK_RATE, ABSORB_RATE):
+    CONNECTION = sqlite3.connect(TABLE_NAME)
+    CURSOR = CONNECTION.cursor()
+
+    CURSOR.execute('''
+        INSERT INTO
+            clays (
+                clay_name,
+                shrink_rate,
+                absorb_rate
+            )
+        VALUES (
+            ?,?,?
+        )
+    ;''', (CLAY_NAME, SHRINK_RATE, ABSORB_RATE))
+    CONNECTION.commit()
+
+def fetchClay(TABLE_NAME, CLAY_NAME):
+    CONNECTION = sqlite3.connect(TABLE_NAME)
+    CURSOR = CONNECTION.cursor()
+
+    CLAY_INDEX = CURSOR.execute(f'''
+        SELECT
+            id
+        FROM clays
+        WHERE
+            clay_name = "{CLAY_NAME}"
+    ;''').fetchone()
+    return int(CLAY_INDEX[0])
+
+def deleteClay(TABLE_NAME, ID):
+    CONNECTION = sqlite3.connect(TABLE_NAME)
+    CURSOR = CONNECTION.cursor()
+
+    CURSOR.execute(f'''
+        DELETE FROM
+            clays
+        WHERE
+            id = {ID}
+    ;''')
+    CONNECTION.commit()
 
 ### OUTPUT FUNCTIONS ###
 def genText(DIMENSION, FINAL_DIMENSION, SHAPE, SHRINK_RATE):
