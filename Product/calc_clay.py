@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter.messagebox import showerror, showinfo
 import backend
 
 def calcClayWindow(mainWindow):
@@ -10,7 +11,7 @@ def calcClayWindow(mainWindow):
 
     ROOT = Tk()
     ROOT.title("Clayculator")
-    ROOT.geometry("225x275")
+    ROOT.geometry("235x295")
     ROOT.resizable(False, False)
 
     OPTIONS = backend.getClays(FILENAME)
@@ -52,7 +53,18 @@ def calcClayWindow(mainWindow):
     SEPARATOR_2 = Label(FRAME, text=" ")
     SEPARATOR_2.grid(row=8, column=0)
 
-    CALC_BUTTON = Button(FRAME, text="Calculate!", width=5)
+    def calcButton():
+        try:
+            ID = backend.fetchClay("clays.db", CLAY_CHOICE.get())
+            SHRINK_RATE = backend.getShrink("clays.db", ID)
+            NEW_DIMENSION = backend.calcShrink(SHRINK_RATE, float(DIMENSION_TEXTBOX.get()))
+            MESSAGE = backend.genText(NEW_DIMENSION, float(DIMENSION_TEXTBOX.get()), CHOICE.get(), SHRINK_RATE)
+            showinfo(title="Result", message=MESSAGE)
+        except ValueError:
+            showerror(message="You need to enter a proper dimension value. Please try again.")
+        
+
+    CALC_BUTTON = Button(FRAME, text="Calculate!", width=5, command=calcButton)
     CALC_BUTTON.grid(row=9, column=0, sticky=E+W, columnspan=3)
 
     SEPARATOR_3 = Label(FRAME, text=" ")

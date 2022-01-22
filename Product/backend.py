@@ -91,6 +91,22 @@ def fetchClay(TABLE_NAME, CLAY_NAME):
             clay_name = "{CLAY_NAME}"
     ;''').fetchone()
     return int(CLAY_INDEX[0])
+def getShrink(TABLE_NAME, ID):
+    CONNECTION = sqlite3.connect(TABLE_NAME)
+    CURSOR = CONNECTION.cursor()
+
+    SHRINK_RATE = float(CURSOR.execute(f'''
+        SELECT
+            shrink_rate
+        FROM clays
+        WHERE
+            id = {ID}
+    ;''').fetchone()[0])
+    return SHRINK_RATE
+
+def calcShrink(SHRINK_RATE, FINAL_DIMENSION):
+    FIRST_DIMENSION = FINAL_DIMENSION / (1 - (SHRINK_RATE / 100))
+    return FIRST_DIMENSION
 
 def deleteClay(TABLE_NAME, ID):
     CONNECTION = sqlite3.connect(TABLE_NAME)
@@ -105,6 +121,8 @@ def deleteClay(TABLE_NAME, ID):
     CONNECTION.commit()
 
 ### OUTPUT FUNCTIONS ###
+
+
 def genText(DIMENSION, FINAL_DIMENSION, SHAPE, SHRINK_RATE):
     if SHAPE == 1:
         DIMENSION_NAME = "circumference"
@@ -115,7 +133,7 @@ def genText(DIMENSION, FINAL_DIMENSION, SHAPE, SHRINK_RATE):
 Your clay will shrink by {SHRINK_RATE}%,
 so to achieve your final {DIMENSION_NAME} of
 {FINAL_DIMENSION}cm, you will need to give your object
-a {DIMENSION}cm {DIMENSION_NAME}.
+a {round(DIMENSION, 2)}cm {DIMENSION_NAME}.
 '''
     return MESSAGE
 

@@ -10,7 +10,7 @@ def deleteClayWindow(mainWindow):
 
     ROOT = Tk()
     ROOT.title("Delete clay")
-    ROOT.geometry("245x140")
+    ROOT.geometry("245x150")
     ROOT.resizable(False, False)
 
     FRAME = Frame(ROOT, padx=5, pady=5)
