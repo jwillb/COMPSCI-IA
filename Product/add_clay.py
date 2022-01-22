@@ -4,6 +4,7 @@ from re import search
 import backend
 
 def addClayWindow(mainWindow):
+    # Most of this is the same as first_screen.py and delete_clay.py
     ROOT = Tk()
     ROOT.title("Add a new clay type")
     ROOT.geometry("225x265")
@@ -39,7 +40,7 @@ def addClayWindow(mainWindow):
     SEPARATOR = Label(FRAME, text=" ")
     SEPARATOR.grid(column=0, row=6)
 
-    def addClay():
+    def addClay(): # Adds a clay with the user inputted information into the database, with invalid input checking
         CLAY_NAME = NAME_ENTRY.get()
         try:
             SHRINK_RATE = float(SHRINK_ENTRY.get())
@@ -70,4 +71,4 @@ def addClayWindow(mainWindow):
     ROOT.mainloop()
 
 if __name__ == "__main__":
-    addClayWindow()
+    print("Wrong file")

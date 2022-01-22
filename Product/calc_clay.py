@@ -3,14 +3,13 @@ from tkinter.messagebox import showerror, showinfo
 import backend
 
 def calcClayWindow(mainWindow):
-    FIRST_RUN = True
-
+    # Most of this is similar to first_screen.py, other than the database accessing
     FILENAME = "clays.db"
 
     OPTIONS = backend.getClays(FILENAME)
 
     ROOT = Tk()
-    ROOT.title("Clayculator")
+    ROOT.title("Clayculator") # Bad pun
     ROOT.geometry("235x295")
     ROOT.resizable(False, False)
 
@@ -22,6 +21,8 @@ def calcClayWindow(mainWindow):
 
     FRAME = Frame(ROOT, padx=5, pady=5)
     FRAME.pack()
+
+    # Various elements and buttons
 
     SHAPE_LABEL = Label(FRAME, text="Shape of object", font=("Arial", 11))
     SHAPE_LABEL.grid(row=0, column=0, columnspan=2, sticky=W)
@@ -53,7 +54,8 @@ def calcClayWindow(mainWindow):
     SEPARATOR_2 = Label(FRAME, text=" ")
     SEPARATOR_2.grid(row=8, column=0)
 
-    def calcButton():
+    def calcButton(): # Use all of the data supplied to calculate the shrinkage and show a message box to the user
+                      # when the button is pressed, or show an error
         try:
             ID = backend.fetchClay("clays.db", CLAY_CHOICE.get())
             SHRINK_RATE = backend.getShrink("clays.db", ID)
@@ -70,7 +72,7 @@ def calcClayWindow(mainWindow):
     SEPARATOR_3 = Label(FRAME, text=" ")
     SEPARATOR_3.grid(row=10)
 
-    def goBack():
+    def goBack(): # Goes back to the main window, while first destroying the current window
         ROOT.destroy()
         mainWindow()
 
@@ -79,5 +81,5 @@ def calcClayWindow(mainWindow):
 
     ROOT.mainloop()
 
-if __name__ == "__main__":
+if __name__ == "__main__": # Only works properly if the program is launched by first_screen.py
     print("Wrong file")

@@ -2,8 +2,7 @@ from tkinter import *
 import backend
 
 def deleteClayWindow(mainWindow):
-    FIRST_RUN = True
-
+    # Most of this is the same as first_screen.py and calc_clay.py
     FILENAME = "clays.db"
 
     OPTIONS = backend.getClays(FILENAME)
@@ -26,7 +25,7 @@ def deleteClayWindow(mainWindow):
     CLAY_OPTIONS = OptionMenu(FRAME, CLAY_CHOICE, *OPTIONS)
     CLAY_OPTIONS.grid(row=1, column=0, sticky=W)
 
-    def deleteButton():
+    def deleteButton(): # Removes clay from database when selected from the drop-down menu
         if CLAY_CHOICE.get() == "":
             pass
         else:
